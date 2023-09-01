@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<section class="vh-100" style="background-color: #e2d5de;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body p-5">
+
+            <h6 class="mb-3">Edit your task here . . .</h6>
+
+            <form method ='POST' class="d-flex justify-content-center align-items-center mb-4">
+              {% csrf_token %}
+
+              <div class="form-outline flex-fill">
+               {{ form}}
+              </div>
+                <button type="submit" class="btn btn-primary btn-lg ms-2">Add</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+{% endblock %}

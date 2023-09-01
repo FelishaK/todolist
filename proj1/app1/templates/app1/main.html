@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<section class="vh-100" style="background-color: #e2d5de;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body p-5">
+
+            <h6 class="mb-3">Awesome Todo List</h6>
+
+            <form method ='POST' class="d-flex justify-content-center align-items-center mb-4">
+              {% csrf_token %}
+
+              <div class="form-outline flex-fill">
+                {{ form.title }}
+              </div>
+              {% if request.user.is_authenticated %}
+                <button type="submit" class="btn btn-primary btn-lg ms-2">Add</button>
+              {% endif %}
+            </form>
+
+            <ul class="list-group mb-0">
+              {% for task in tasks %}
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2">
+                <div class="d-flex align-items-center">
+
+                  {% if task.complete %}
+                    <input class="form-check-input me-2" type="checkbox" onclick="return false;" checked aria-label="..."/>
+                          <strike>
+                            <a href="{% url 'edit' task.pk %}" style="text-decoration:none"><b>{{ task }}</b></a>
+                          </strike>
+                  {% else %}
+                    <input class="form-check-input me-3" type="checkbox" onclick="return false;"  aria-label="..." />
+                            <a href="{% url 'edit' task.pk %}" style="text-decoration:none"><b>{{ task }}</b></a>
+                  {% endif %}
+                </div>
+                {% if task.complete%}
+                  completed
+                {% else %}
+                  added: {{ task.created|timesince }} ago
+                {% endif %}
+                <a href="{% url 'delete' task.pk %}" data-mdb-toggle="tooltip" title="Remove item">
+                  <i class="fas fa-times text-primary">&#10006;</i>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
